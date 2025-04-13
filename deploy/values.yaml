@@ -1,0 +1,21 @@
+replicaCount: 3
+
+env: dev
+
+web:
+  image:
+    name: docker.io/library/web
+    tag: latest
+
+api:
+  image:
+    name: docker.io/library/api
+    tag: latest
+
+nginx:
+  image:
+    name: nginx
+    tag: alpine
+
+nodeSelector:
+  kubernetes.io/hostname: k3s-worker

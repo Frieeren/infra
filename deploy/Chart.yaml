@@ -1,0 +1,6 @@
+apiVersion: v2
+name: frieeren
+description: A frieeren Helm chart for k3s
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

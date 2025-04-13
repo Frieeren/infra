@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api
+  labels:
+    app: api
+    env: {{ .Values.env }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+        env: {{ .Values.env }}
+        release: {{ .Release.Name }}
+    spec:
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      restartPolicy: Always
+      containers:
+      - name: {{ .Release.Name }}-api
+        image: {{ .Values.api.image.name }}:{{ .Values.api.image.tag }}
+        imagePullPolicy: Always
+        livenessProbe:
+            exec:
+              command:
+                - curl
+                - --silent
+                - -f
+                - http://{{ .Release.Name }}-api:3000/api/healthcheck
+            failureThreshold: 30
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+        ports:
+          - containerPort: 3000
