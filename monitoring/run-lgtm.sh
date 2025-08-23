@@ -4,6 +4,7 @@ RELEASE=${1:-latest}
 
 docker run \
   --name lgtm \
+  -d \
   --network chart-pattern_default \
   -p 3000:3000 \
   -p 4317:4317 \
